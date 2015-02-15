@@ -7,4 +7,7 @@
     <string name="search_label">Search</string>
     <string name="image_title_label">Image Title</string>
     <string name="image_result_label">Image Result</string>
+    <string name="title_activity_image_display">ImageDisplayActivity</string>
+    <string name="no_internet_connection_label">No internet connection!</string>
+    <string name="ok_label">OK</string>
 </resources>

@@ -1,11 +1,15 @@
 package com.codepath.gridimagesearch.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ImageResult {
+public class ImageResult implements Parcelable {
+
     private String mFullUrl;
     private String mThumbUrl;
     private String mTitle;
@@ -62,4 +66,35 @@ public class ImageResult {
 
         return imageResults;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.mFullUrl);
+        dest.writeString(this.mThumbUrl);
+        dest.writeString(this.mTitle);
+    }
+
+    public ImageResult() {
+    }
+
+    private ImageResult(Parcel in) {
+        this.mFullUrl = in.readString();
+        this.mThumbUrl = in.readString();
+        this.mTitle = in.readString();
+    }
+
+    public static final Parcelable.Creator<ImageResult> CREATOR = new Parcelable.Creator<ImageResult>() {
+        public ImageResult createFromParcel(Parcel source) {
+            return new ImageResult(source);
+        }
+
+        public ImageResult[] newArray(int size) {
+            return new ImageResult[size];
+        }
+    };
 }

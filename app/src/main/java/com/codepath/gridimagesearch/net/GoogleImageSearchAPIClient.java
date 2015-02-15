@@ -32,10 +32,11 @@ public class GoogleImageSearchAPIClient {
     }
 
     // Method for accessing the search API
-    public static void getImages(final String query, JsonHttpResponseHandler handler) {
+    public static void getImages(final String query, final int start, JsonHttpResponseHandler handler) {
         RequestParams params = new RequestParams();
         params.put("v", API_VERSION);
         params.put("rsz", API_DEFAULT_PAGE_SIZE);
+        params.put("start", start);
         try {
             String url = getAbsoluteUrl("images");
             params.put("q", URLEncoder.encode(query, "utf-8"));

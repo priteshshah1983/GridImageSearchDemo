@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.codepath.gridimagesearch.R;
 import com.codepath.gridimagesearch.models.ImageResult;
@@ -45,16 +46,20 @@ public class ImageDisplayActivity extends ActionBarActivity {
         setContentView(R.layout.activity_image_display);
         TouchImageView ivImageResult = (TouchImageView) findViewById(R.id.ivImageResult);
         final ImageResult imageResult = getIntent().getParcelableExtra(EXTRA_RESULT);
+        final ProgressBar pb = (ProgressBar) findViewById(R.id.pbLoading);
+        pb.setVisibility(ProgressBar.VISIBLE);
         Picasso.with(this).load(imageResult.getFullUrl()).resize(MAX_WIDTH, MAX_HEIGHT).into(ivImageResult, new Callback() {
             @Override
             public void onSuccess() {
                 // Setup share intent now that image has loaded
                 setupShareIntent();
+                pb.setVisibility(ProgressBar.INVISIBLE);
             }
 
             @Override
             public void onError() {
                 Log.e(TAG, "Failed to call API with picasso: " + imageResult.getFullUrl());
+                pb.setVisibility(ProgressBar.INVISIBLE);
                 notifyUserAboutAPIError();
             }
         });

@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ProgressBar;
 
 import com.codepath.gridimagesearch.R;
 import com.codepath.gridimagesearch.adapters.EndlessScrollListener;
@@ -171,6 +172,9 @@ public class SearchActivity extends ActionBarActivity implements EditSettingsFra
         if (!isNetworkAvailable()) {
             notifyUserAboutNoInternetConnectivity();
         } else {
+            final ProgressBar pb = (ProgressBar) findViewById(R.id.pbLoading);
+            pb.setVisibility(ProgressBar.VISIBLE);
+
             SearchView searchView = (SearchView) findViewById(R.id.action_search);
 //            String query = etQuery.getText().toString();
             String query = searchView.getQuery().toString();
@@ -195,11 +199,13 @@ public class SearchActivity extends ActionBarActivity implements EditSettingsFra
                             Log.d(TAG, "count = " + imageResults.size());
                         }
                     }
+                    pb.setVisibility(ProgressBar.INVISIBLE);
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                     Log.e(TAG, "Failed to call API: " + throwable);
+                    pb.setVisibility(ProgressBar.INVISIBLE);
                     notifyUserAboutAPIError();
                 }
             });

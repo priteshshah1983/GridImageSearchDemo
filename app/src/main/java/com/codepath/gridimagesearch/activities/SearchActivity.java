@@ -70,7 +70,7 @@ public class SearchActivity extends ActionBarActivity implements EditSettingsFra
     private void showEditSettingsDialog() {
         FragmentManager fm = getSupportFragmentManager();
         // TODO: Hardcoded string
-        EditSettingsFragment editSettingsDialog = EditSettingsFragment.newInstance(settings, "Advanced Filters");
+        EditSettingsFragment editSettingsDialog = EditSettingsFragment.newInstance(settings, getResources().getString(R.string.advanced_filters_label));
         editSettingsDialog.show(fm, "fragment_edit_settings");
     }
 
@@ -131,12 +131,13 @@ public class SearchActivity extends ActionBarActivity implements EditSettingsFra
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // perform query here
                 getImages(0);
+                searchView.clearFocus();
                 return true;
             }
 
@@ -162,10 +163,6 @@ public class SearchActivity extends ActionBarActivity implements EditSettingsFra
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void onImageSearch(View view) {
-        getImages(0);
     }
 
     private void getImages(final int start) {

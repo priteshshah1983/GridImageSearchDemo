@@ -1,4 +1,4 @@
-# Instagram Client Demo
+# Google Image Search Demo
 
 This is an Android demo application for fetching the photos from Google using the [Google Image Search API](https://developers.google.com/image-search/v1/jsondevguide#json_reference).
 

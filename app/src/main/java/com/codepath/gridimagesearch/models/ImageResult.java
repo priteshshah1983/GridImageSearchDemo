@@ -13,6 +13,30 @@ public class ImageResult implements Parcelable {
     private String mFullUrl;
     private String mThumbUrl;
     private String mTitle;
+    private int mThumbWidth;
+    private int mThumbHeight;
+
+    public int getThumbHeight() {
+        return mThumbHeight;
+    }
+
+    public void setThumbHeight(int thumbHeight) {
+        mThumbHeight = thumbHeight;
+    }
+
+    public int getThumbWidth() {
+        return mThumbWidth;
+    }
+
+    public void setThumbWidth(int thumbWidth) {
+        mThumbWidth = thumbWidth;
+    }
+
+    @Override
+    public String toString() {
+        String separator = ", ";
+        return "Full URL" + " : " + this.getFullUrl() + separator + "Thumb URL" + " : " + this.getThumbUrl() + separator + "Title" + " : " + this.getTitle() + separator + "Thumb Width" + " : " + this.getThumbWidth() + separator + this.getTitle() + separator + "Thumb Height" + " : " + this.getThumbHeight();
+    }
 
     public String getThumbUrl() {
         return mThumbUrl;
@@ -43,7 +67,14 @@ public class ImageResult implements Parcelable {
         imageResult.setFullUrl(photoJSON.optString("url"));
         imageResult.setThumbUrl(photoJSON.optString("tbUrl"));
         imageResult.setTitle(photoJSON.optString("title"));
-
+        String width = photoJSON.optString("tbWidth");
+        if (width != null) {
+            imageResult.setThumbWidth(Integer.parseInt(width));
+        }
+        String height = photoJSON.optString("tbHeight");
+        if (height != null) {
+            imageResult.setThumbHeight(Integer.parseInt(height));
+        }
         return imageResult;
     }
 

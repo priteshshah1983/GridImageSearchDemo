@@ -1,6 +1,7 @@
 package com.codepath.gridimagesearch.net;
 
 
+import com.codepath.gridimagesearch.models.GoogleAPISettings;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -32,11 +33,24 @@ public class GoogleImageSearchAPIClient {
     }
 
     // Method for accessing the search API
-    public static void getImages(final String query, final int start, JsonHttpResponseHandler handler) {
+    public static void getImages(final GoogleAPISettings apiSettings, final String query, final int start, JsonHttpResponseHandler handler) {
         RequestParams params = new RequestParams();
         params.put("v", API_VERSION);
         params.put("rsz", API_DEFAULT_PAGE_SIZE);
         params.put("start", start);
+
+        if (apiSettings.getImageType() != null) {
+            params.put("imgtype", apiSettings.getImageType());
+        }
+        if (apiSettings.getColorFilter() != null) {
+            params.put("imgcolor", apiSettings.getColorFilter());
+        }
+        if (apiSettings.getImageSize() != null) {
+            params.put("imgsz", apiSettings.getImageSize());
+        }
+        if (apiSettings.getSiteFilter() != null) {
+            params.put("as_sitesearch", apiSettings.getSiteFilter());
+        }
         try {
             String url = getAbsoluteUrl("images");
             params.put("q", URLEncoder.encode(query, "utf-8"));
